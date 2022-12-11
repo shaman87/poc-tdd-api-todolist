@@ -91,3 +91,30 @@ describe("PUT /todolist/:taskId", () => {
     );
   });
 });
+
+describe("DELETE /todolist/:taskId", () => {
+  it("should respond with status 400 when taskId is not given", async () => {
+    const response = await api.delete("/todolist/:taskId");
+
+    expect(response.status).toBe(400);
+  });
+
+  it("should respond with status 400 when given taskId is not a number", async () => {
+    const taskId = "fake number";
+    const response = await api.delete(`/todolist/${taskId}`);
+
+    expect(response.status).toBe(400);
+  });
+
+  it("should respond with status 404 when given taskId is not found", async () => {
+    const response = await api.delete("/todolist/10");
+
+    expect(response.status).toBe(404);
+  });
+
+  it("should respond with status 200 and when the given taskId is valid", async () => {
+    const response = await api.delete("/todolist/1");
+
+    expect(response.status).toBe(200);
+  });
+})

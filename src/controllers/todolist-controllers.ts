@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { findManyTodoList, insertTask, updateTaskById } from "../repositories/todolist-repository";
+import { deleteTaskById, findManyTodoList, insertTask, updateTaskById } from "../repositories/todolist-repository";
 
 function getTodoList(req: Request, res: Response) {
   const todolist = findManyTodoList();
@@ -27,4 +27,14 @@ function updateTask(req: Request, res: Response) {
   return res.status(200).send(updatedTask);
 }
 
-export { getTodoList, postTask, updateTask };
+function deleteTask(req: Request, res: Response) {
+  const taskId = Number(req.params.taskId);
+  if(!taskId || isNaN(taskId)) return res.status(400).send("BAD REQUEST!");
+
+  const deletedTask = deleteTaskById(taskId);
+  if(deletedTask === "NOT FOUND!") return res.status(404).send("NOT FOUND!");
+  
+  return res.sendStatus(200);
+}
+
+export { getTodoList, postTask, updateTask, deleteTask };
