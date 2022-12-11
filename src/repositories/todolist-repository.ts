@@ -56,7 +56,20 @@ function insertTask(taskName: string): Task {
   }
 }
 
-function cleanArray(): Task[] {
+function updateTaskById(taskId: number): Task | String {
+  const task = todolist[taskId-1];
+  if(!task) return "NOT FOUND!";
+
+  todolist[taskId-1].done = true;
+
+  return {
+    id: task.id, 
+    taskName: task.taskName, 
+    done: true
+  }
+}
+
+function clearArray(): Task[] {
   return todolist = [];
 }
 
@@ -70,4 +83,4 @@ function populateArray(): Task[] {
   ]
 }
 
-export { findManyTodoList, insertTask, cleanArray, populateArray };
+export { findManyTodoList, insertTask, updateTaskById, clearArray, populateArray };
