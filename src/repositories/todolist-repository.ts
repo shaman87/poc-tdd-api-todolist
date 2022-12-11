@@ -1,21 +1,73 @@
-let todolist = [];
+import { Task } from "../protocols/task";
 
-function findManyTodoList() {
+let todolist: Task[] = [
+  {
+    id: 1, 
+    taskName: "Study JavaScript", 
+    done: false
+  }, 
+  {
+    id: 2, 
+    taskName: "Read a book", 
+    done: false
+  }, 
+  {
+    id: 3, 
+    taskName: "Jogging", 
+    done: false
+  }
+];
+
+function findManyTodoList(): Task[] {
   return todolist;
 }
 
-function cleanArray() {
+function insertTask(taskName: string): Task {
+  if(todolist.length === 0) {
+    todolist.push(
+      {
+        id: 1, 
+        taskName, 
+        done: false
+      }
+    );
+
+    return {
+      id: 1, 
+      taskName, 
+      done: false
+    }
+  }
+
+  const taskId = todolist[todolist.length - 1].id + 1;
+  
+  todolist.push(
+    {
+      id: taskId, 
+      taskName, 
+      done: false
+    }
+  )
+
+  return {
+    id: taskId, 
+    taskName, 
+    done: false
+  }
+}
+
+function cleanArray(): Task[] {
   return todolist = [];
 }
 
-function populateArray() {
+function populateArray(): Task[] {
   return todolist = [
     {
       id: 1, 
-      task: "Study JavaScript", 
-      done: true
+      taskName: "Study JavaScript", 
+      done: false
     }
   ]
 }
 
-export { findManyTodoList, cleanArray, populateArray };
+export { findManyTodoList, insertTask, cleanArray, populateArray };

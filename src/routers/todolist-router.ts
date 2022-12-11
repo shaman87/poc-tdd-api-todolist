@@ -1,8 +1,10 @@
 import express from "express";
-import { getTodoList } from "../controllers/todolist-controllers";
+import { getTodoList, postTask } from "../controllers/todolist-controllers";
 
 const router = express.Router();
 
-router.get("/todolist", getTodoList);
+router
+  .get("/todolist", getTodoList)
+  .post("/todolist", postTask);
 
 export default router;

@@ -1,13 +1,20 @@
 import { Request, Response } from "express";
-import { findManyTodoList } from "../repositories/todolist-repository";
+import { findManyTodoList, insertTask } from "../repositories/todolist-repository";
 
-async function getTodoList(req: Request, res: Response  ) {
-  try {
-    const todolist = findManyTodoList();
-    return res.status(200).send(todolist);
-  } catch(error) {
-    return res.status(204).send("NO CONTENT");
-  }
+function getTodoList(req: Request, res: Response  ) {
+  const todolist = findManyTodoList();
+  if(!todolist) return res.status(204).send("NO CONTENT!");
+
+  return res.status(200).send(todolist);
 }
 
-export { getTodoList };
+function postTask(req: Request, res: Response) {
+  const { task } = req.body;
+  const taskName: string = task;
+  if(!taskName || typeof task !== "string") return res.status(400).send("BAD REQUEST!");
+
+  const newTask = insertTask(taskName);
+  return res.status(200).send(newTask);
+}
+
+export { getTodoList, postTask };
